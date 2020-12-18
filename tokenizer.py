@@ -46,7 +46,7 @@ class Tokenizer:
 
     def transform_one(self, sentence):
         wid = []
-        for word in jieba.lcut(sentence,HMM=False):
+        for word in jieba.lcut(sentence, HMM=False):
             w = self.word2id.get(word, self.UNKNOW)
             wid.append(w)
         return wid

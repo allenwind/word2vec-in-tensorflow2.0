@@ -70,11 +70,11 @@ def DataGenerator(epochs=10):
             sentence = [0] * window + [word2id[w] for w in sentence if w in word2id] + [0] * window
             probs = np.random.random(len(sentence))
             for i in range(window, len(sentence) - window):
-                # 满足降采样条件的直接跳过
+                # 过滤context
                 c = sentence[i]
                 if c in subsamples and probs[i] > subsamples[c]:
                     continue
-                # 窗口中的内容
+                # 滑动窗口中的词序列
                 x = np.array(sentence[i-window:i] + sentence[i+1:i+window+1])
                 c = np.array([c])
                 # 为方便直接把target放在位置0
