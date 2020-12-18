@@ -43,7 +43,7 @@ id2word = {j:i for i,j in word2id.items()}
 vocab_size = len(tokenizer)
 
 def create_subsamples(words, subsample_eps=1e-5):
-    """计算降采样表"""
+    # 计算降采样表，用于context
     total = len(words)
     subsamples = {}
     for i, j in words.items():

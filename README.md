@@ -3,7 +3,19 @@
 基于Tensorflow2.x的Word2vec。Word2vec是求取词向量的工具，包括两个模型（CBOW和SkipGram）和两种优化方案（Hierarchical softmax和负采样），这里暂时开源CBOW。
 
 
-测试：
+模型训练（需要训练语料，可自行调整）：
+
+```bash
+$ python model_cbow.py
+```
+
+模型训练好后简单的相似计算：
+
+```bash
+$ python tooks.py
+```
+
+简单的交互测试：
 
 ```bash
 >>> from tools import topk_similar
@@ -45,4 +57,4 @@
  ('256MB', 0.89573085)]
 ```
 
-训练直接使用THUCNews语料。
+以上的训练直接使用[THUCNews语料](http://thuctc.thunlp.org/)。
