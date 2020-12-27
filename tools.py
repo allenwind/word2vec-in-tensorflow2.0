@@ -1,10 +1,16 @@
 import pprint
 import numpy as np
-from model_cbow import model
+from model_cbow import model as cbow
+from model_skipgram import model as skipgram
 from dataset import word2id, id2word
 
+MODEL = "cbow" # skipgram
+
 # embeddings权重
-embeddings = model.get_weights()[0]
+if MODEL == "cbow":
+    embeddings = cbow.get_weights()[0]
+else:
+    embeddings = skipgram.get_weights()[0]
 
 def norm(x):
     x = x / np.sqrt(np.square(x).sum(axis=1).reshape((-1, 1)))

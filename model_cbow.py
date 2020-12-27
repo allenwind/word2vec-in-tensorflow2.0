@@ -48,7 +48,7 @@ class NegativeSamplingLayer(tf.keras.layers.Layer):
         return x
 
 class RandomSoftmax(tf.keras.layers.Layer):
-    """只在抽样内做计算，减小计算量"""
+    """负采样优化计算softmax，减小计算量"""
 
     def __init__(self, input_dim, output_dim, **kwargs):
         super(RandomSoftmax, self).__init__(**kwargs)
@@ -72,9 +72,10 @@ output_dim = 128
 negative_count = 16
 # 单边窗口大小
 window = 5
+span = window * 2
 input_dim = vocab_size
 
-words = Input(shape=(2*window,), dtype=tf.int32) # 滑动窗口内的词序列
+words = Input(shape=(span,), dtype=tf.int32) # 滑动窗口内的词序列
 target = Input(shape=(1,), dtype=tf.int32) # 目标词
 context = CBOWLayer(input_dim, output_dim)(words) # # 上下文向量
 samples = NegativeSamplingLayer(negative_count, input_dim)(target)

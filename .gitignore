@@ -1,7 +1,7 @@
 word2vec.weights.*
+skipgram.weights.*
 checkpoint
 model.py
-model_skipgram.py
 word2vec_basic.py
 word_meta.json
 

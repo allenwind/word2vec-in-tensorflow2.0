@@ -62,6 +62,7 @@ def create_subsamples(words, subsample_eps=1e-5):
 subsamples = create_subsamples(words)
 
 def DataGenerator(epochs=10):
+    # cbow data
     for epoch in range(epochs):
         sentences = load_sentences()
         for sentence in sentences:
@@ -81,6 +82,25 @@ def DataGenerator(epochs=10):
                 z = np.array([0])
                 yield (x, c), z
 
+def DataGeneratorSG(epochs=10):
+    # skip-gram data
+    for epoch in range(epochs):
+        sentences = load_sentences(limit=1000)
+        for sentence in sentences:
+            # 关闭新词发现功能
+            sentence = jieba.lcut(sentence, HMM=False)
+            sentence = [0] * window + [word2id[w] for w in sentence if w in word2id] + [0] * window
+            probs = np.random.random(len(sentence))
+            for i in range(window, len(sentence) - window):
+                # 过滤context
+                c = sentence[i]
+                if c in subsamples and probs[i] > subsamples[c]:
+                    continue
+                # 滑动窗口中的词序列
+                x = np.array(sentence[i-window:i] + sentence[i+1:i+window+1])
+                c = np.array([c])
+                yield (c, x), ()
+
 def create_dataset(window, minlen, batch_size=32, epochs=10):
     pass
 
@@ -95,8 +115,23 @@ dl = tf.data.Dataset.from_generator(
     drop_remainder=True
 ).prefetch(tf.data.experimental.AUTOTUNE)
 
+dl_sg = tf.data.Dataset.from_generator(
+    DataGeneratorSG,
+    output_types=((tf.int32, tf.int32), ())
+).shuffle(
+    buffer_size=1024
+).padded_batch(
+    batch_size=320,
+    padded_shapes=(([None], [None]), ()),
+    drop_remainder=True
+).prefetch(tf.data.experimental.AUTOTUNE)
+
 if __name__ == "__main__":
     # 测试
     for (a, b), c in iter(dl):
         print(a.shape, b.shape, c.shape)
+        break
+
+    for (a, b), _ in iter(dl_sg):
+        print(a.shape, b.shape)
         break
