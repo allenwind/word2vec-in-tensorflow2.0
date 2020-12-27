@@ -67,9 +67,14 @@ $ python tooks.py
 模型训练（需要训练语料，可自行调整）：
 
 ```bash
-$ python model_cbow.py
+$ python model_skipgram.py
 ```
 
+`tooks.py`中的参数调整为`skipgram`后做简单的相似计算：
+
+```bash
+$ python tooks.py
+```
 
 ## 参考
 
