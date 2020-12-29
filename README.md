@@ -14,7 +14,7 @@ $ python model_cbow.py
 模型训练好后简单的相似计算：
 
 ```bash
-$ python tooks.py
+$ python tools.py
 ```
 
 简单的交互测试：
@@ -70,10 +70,10 @@ $ python tooks.py
 $ python model_skipgram.py
 ```
 
-`tooks.py`中的参数调整为`skipgram`后做简单的相似计算：
+`tools.py`中的参数调整为`skipgram`后做简单的相似计算：
 
 ```bash
-$ python tooks.py
+$ python tools.py
 ```
 
 ## 参考
