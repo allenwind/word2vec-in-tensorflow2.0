@@ -8,18 +8,21 @@ jieba.initialize()
 class Tokenizer:
     """支持并行的Tokenizer"""
 
-    def __init__(self, mintf=16, processes=7):
+    def __init__(self, tokenize=None, mintf=16, processes=7):
         self.word2id = {}
         self.MASK = 0
         self.UNKNOW = 1
+        if tokenize is None:
+            tokenize = lambda text: jieba.lcut(text, HMM=False)
+        self.tokenize = tokenize
         self.mintf = mintf
         self.processes = processes
         self.filters = set("!\"#$%&'()[]*+,-./，。！@·……（）【】<>《》?？；‘’“”")
 
     def fit_in_parallel(self, X):
-        tokenize = lambda x: jieba.lcut(x, HMM=False)
+        
         words = count_in_parallel_from_generator(
-            tokenize=tokenize,
+            tokenize=self.tokenize,
             generator=X,
             processes=self.processes
         )
