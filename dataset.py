@@ -44,6 +44,7 @@ vocab_size = len(tokenizer)
 
 def create_subsamples(words, subsample_eps=1e-5):
     # 计算降采样表，用于context
+    # 参考tf.keras.preprocessing.sequence.make_sampling_table
     total = len(words)
     subsamples = {}
     for i, j in words.items():

@@ -2,8 +2,12 @@ word2vec.weights.*
 skipgram.weights.*
 checkpoint
 model.py
-word2vec_basic.py
+word2vec_basic*.py
+model_skipgram2.py
 word_meta.json
+*.tsv
+log
+logs
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
