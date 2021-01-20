@@ -1,5 +1,6 @@
 word2vec.weights.*
 skipgram.weights.*
+word2vec.model
 checkpoint
 model.py
 word2vec_basic*.py
